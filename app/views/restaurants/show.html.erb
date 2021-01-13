@@ -1,9 +1,35 @@
-<h1><%= @restaurant.name%></h1>
 
-<ul>
-  <li>Address: <%= @restaurant.address %></li>
-  <li>Phone: <%= @restaurant.phone_number %></li>
-</ul>
+<div class="card bg-dark text-white">
+  <img class="card-img" src="https://picsum.photos/900/300" alt="Card image">
+  <div class="card-img-overlay">
+    <h5 class="card-title"><%= @restaurant.name%></h5>
+    <p class="card-text">Address: <%= @restaurant.address %></p>
+    <p class="card-text">Phone: <%= @restaurant.phone_number %></p>
+    <p class="card-text">Category: <%= @restaurant.category %></p>
+    <%= link_to "Leave a Review", new_restaurant_review_path(@restaurant), class: "btn btn-lg btn-outline-info" %>
+  </div>
+</div>
 
-<h3>Category: <%= @restaurant.category %></h3>
+<h2>Our users say. . </h2>
+<% if !@restaurant.reviews.empty? %>
+  <% @restaurant.reviews.each do |review| %>
+    <div class="card">
+      <div class="card-header">
+        Anonymous comment
+      </div>
+      <div class="card-body">
+        <blockquote class="blockquote mb-0">
+          <p><%= review.content %></p>
+          <footer class="blockquote-footer">Score: <cite title="Source Title"><%= review.rating %>/5</cite></footer>
+        </blockquote>
+      </div>
+    </div>
+  <% end %>
+<% else %>
+    <div>
+    <h3>Be the first to review this restaurant!</h3>
+    <%= link_to "Leave a Review", new_restaurant_review_path(@restaurant), class: "btn btn-lg btn-outline-info" %>
+    </div>
+<% end %>
+
 <p><%= link_to "Back", restaurants_path %></p>
